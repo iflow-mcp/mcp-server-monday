@@ -1,5 +1,5 @@
 [project]
-name = "mcp-server-monday"
+name = "iflow-mcp_mcp-server-monday"
 version = "0.3.0"
 description = "MCP Server for monday.com"
 readme = "README.md"
@@ -22,6 +22,9 @@ build-backend = "hatchling.build"
 include = [
   "src/mcp_server_monday/*.py",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_server_monday"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
