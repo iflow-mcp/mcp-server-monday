@@ -305,18 +305,27 @@ def main():
 
 
 async def run_server():
-    """Run the FastMCP server with HTTP streaming transport."""
-    # Configuration from environment variables
-    host = os.getenv("FASTMCP_HOST", "0.0.0.0")
-    port = int(os.getenv("FASTMCP_PORT", "8000"))
-    path = os.getenv("FASTMCP_PATH", "/api/mcp/")
-
-    logger.info("Starting Monday.com FastMCP server with HTTP streaming transport")
-    logger.info(f"Server will be available at http://{host}:{port}{path}")
-
+    """Run the FastMCP server with stdio transport."""
     global monday_client
-    monday_client = MondayClient(MONDAY_API_KEY)
-    await mcp.run_async(transport="http", host=host, port=port, path=path)
+    
+    # Configuration from environment variables
+    transport = os.getenv("FASTMCP_TRANSPORT", "stdio")
+    
+    if transport == "http":
+        host = os.getenv("FASTMCP_HOST", "0.0.0.0")
+        port = int(os.getenv("FASTMCP_PORT", "8000"))
+        path = os.getenv("FASTMCP_PATH", "/api/mcp/")
+        
+        logger.info("Starting Monday.com FastMCP server with HTTP streaming transport")
+        logger.info(f"Server will be available at http://{host}:{port}{path}")
+        
+        monday_client = MondayClient(MONDAY_API_KEY)
+        await mcp.run_async(transport="http", host=host, port=port, path=path)
+    else:
+        logger.info("Starting Monday.com FastMCP server with stdio transport")
+        
+        monday_client = MondayClient(MONDAY_API_KEY)
+        await mcp.run_async(transport="stdio")
 
 
 if __name__ == "__main__":

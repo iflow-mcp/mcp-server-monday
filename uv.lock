@@ -426,7 +426,7 @@ wheels = [
 
 [[package]]
 name = "iflow-mcp-mcp-server-monday"
-version = "0.3.0"
+version = "0.3.2"
 source = { editable = "." }
 dependencies = [
     { name = "fastmcp" },
